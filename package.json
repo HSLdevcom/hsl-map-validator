@@ -1,0 +1,24 @@
+{
+  "name": "hsl-map-validator",
+  "version": "1.0.0",
+  "description": "HSL Map Validator",
+  "main": "start.js",
+  "dependencies": {
+    "lodash": "^4.17.2",
+    "tile-reduce": "^3.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HSLdevcom/hsl-map-validator.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HSLdevcom/hsl-map-validator/issues"
+  },
+  "homepage": "https://github.com/HSLdevcom/hsl-map-validator#readme"
+}
