@@ -2,7 +2,7 @@
 
 const fs = require("fs");
 const path = require("path");
-const countValidator = require("./validators/count");
+const blacklistValidator = require("./validators/blacklist");
 
 const limits = JSON.parse(fs.readFileSync(path.join(__dirname, "limits.geojson")));
 
@@ -13,9 +13,7 @@ const options = {
         raw: false
     }],
     zoom: 15,
-  //  geojson: limits,
+    //  geojson: limits,
 };
 
-countValidator(options, (result) => {
-    console.log("Tile count " + result);
-});
+blacklistValidator(options);
