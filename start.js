@@ -4,8 +4,6 @@ const fs = require("fs");
 const path = require("path");
 const blacklistValidator = require("./validators/blacklist");
 
-const limits = JSON.parse(fs.readFileSync(path.join(__dirname, "limits.geojson")));
-
 const options = {
     sources: [{
         name: "osm",
@@ -13,7 +11,6 @@ const options = {
         raw: false
     }],
     zoom: 15,
-    //  geojson: limits,
 };
 
 blacklistValidator(options);
