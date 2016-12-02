@@ -1,8 +1,11 @@
 "use strict";
 
+const fs = require("fs");
+const path = require("path");
 const turf = require("turf");
 
-const blacklist = ["helsingin"];
+const blacklist = fs.readFileSync(path.join(__dirname, "./blacklist"), "utf8")
+    .split("\n").filter(val => !!(val.trim()));
 
 function normalize(value) {
     return value
