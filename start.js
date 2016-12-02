@@ -7,9 +7,10 @@ const blacklistValidator = require("./validators/blacklist");
 const options = {
     sources: [{
         name: "osm",
-        mbtiles: path.join(__dirname, "finland.mbtiles"),
+        mbtiles: path.join(__dirname, "import", "finland.mbtiles"),
         raw: false
     }],
+    output: fs.createWriteStream(path.join(__dirname, "export", "blacklist.geojson")),
     zoom: 15,
 };
 
