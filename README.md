@@ -26,3 +26,10 @@ Merge results into one GeoJSON
 ```
 node geojson-merge export/*.geojson export/all.geojson
 ```
+
+## Scripts
+
+Run pixelmatch
+
+```
+node start-match

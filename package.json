@@ -7,6 +7,11 @@
     "geojson-merge": "^0.3.0",
     "glob": "^7.1.1",
     "lodash": "^4.17.2",
+    "ncp": "^2.0.0",
+    "pixelmatch": "^4.0.2",
+    "pngjs": "^3.0.0",
+    "request": "^2.79.0",
+    "sphericalmercator": "^1.0.5",
     "tile-reduce": "^3.1.1",
     "turf": "^3.0.14"
   },
