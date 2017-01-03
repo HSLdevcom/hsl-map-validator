@@ -1,2 +1,7 @@
-*
+/*
 !.gitignore
+!matching/
+matching/critical/*
+!matching/critical/.gitkeep
+matching/diff/*
+!matching/diff/.gitkeep
