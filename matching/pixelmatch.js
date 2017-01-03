@@ -53,10 +53,15 @@ function compareTiles(tile1, tile2, zoom, x, y, threshold, tilesTotal) {
 module.exports = function(options) {
     let xyz;
 	if (options.area.xyz) {
-		xyz = options.area.xyz;
+		xyz = {
+			minX: options.area.xyz[0],
+			minY: options.area.xyz[1],
+			maxX: options.area.xyz[2],
+			maxY: options.area.xyz[3],
+		};
 	} else {
 		const merc = new SphericalMercator({
-		    size: options.area.size || 256,
+		    size: options.area.size,
 		});
 		xyz = merc.xyz(options.area.bbox, options.area.zoom);
 	}	

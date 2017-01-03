@@ -1,25 +1,21 @@
 "use strict";
 
-const urlMap = "https://api.digitransit.fi/map/v1/hsl-map";
-const urlMapDev = "https://dev-api.digitransit.fi/map/v1/hsl-map";
-const urlRouting = "http://api.digitransit.fi/routing/v1/routers/hsl/inspector/tile/traversal";
-const urlRoutingDev = "http://dev-api.digitransit.fi/routing/v1/routers/hsl/inspector/tile/traversal";
-const hslAreaBbox = [24.2578125, 59.86136748351594, 25.551452636718746, 60.5153990545698];
-const routingAreaXyz = { minX: 74615, minY: 37936, maxX: 74618, maxY: 37940 };
 const pixelMatcher = require("./matching/pixelmatch");
 
 const options = {
-	url1: urlRouting,
-    url2: urlRoutingDev,
+	url1: process.env.TILE_URL1,
+    url2: process.env.TILE_URL2,
     area: {
-    	zoom: 17,
-	    xyz: routingAreaXyz,
-	    size: 256,
+    	zoom: Number(process.env.ZOOM) || 14,
+	    size:  Number(process.env.SIZE) || 256,
     },
     threshold: {
-    	pixelsCritical: 1000,
-    	colorThreshold: 0.1,
+    	pixelsCritical: Number(process.env.PIXELS_CRITICAL) || 1000,
+    	colorThreshold: Number(process.env.COLOR_THRESHOLD) || 0.1,
     },
 };
+
+if (process.env.AREA_XYZ) options.area.xyz = JSON.parse(process.env.AREA_XYZ);
+else if (process.env.AREA_BBOX) options.area.bbox = JSON.parse(process.env.AREA_BBOX);
 
 pixelMatcher(options);
