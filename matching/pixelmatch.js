@@ -9,6 +9,12 @@ const ncp = require('ncp').ncp;
 let tileCounter = 0;
 let tilesTotal = 0;
 
+/**
+ * Gets all tiles within the defined range and runs tile comparison for each pair of tiles
+ * @param  {Object} xyz     Defines range of tiles to include (xyz format)
+ * @param  {Object} options Options used for comparison
+ * @return {Promise}        Promise containing the function for comparing all tiles within the collection
+ */
 function getTiles(xyz, options) {
 	return new Promise((resolve) => {
 		let promises = [];
@@ -26,7 +32,17 @@ function getTiles(xyz, options) {
 	});
 }
 
-function compareTiles(tile1, tile2, zoom, x, y, threshold, tilesTotal) {
+/**
+ * Runs pixelmatch comparison bewtween two tiles of the same area
+ * @param  {String} tile1      Url from which the first tile is fetched
+ * @param  {String} tile2      Url from which the second tile is fetched
+ * @param  {Number} zoom       Zoom level for tile comparison
+ * @param  {Number} x          The horizontal order number of the tile
+ * @param  {Numner} y          The vertical order number of the tile
+ * @param  {Number} threshold  Threshold values used in the comparison
+ * @return {Promise}           Promise containing the comparison function
+ */
+function compareTiles(tile1, tile2, zoom, x, y, threshold) {
 	return new Promise((resolve) => {
 		let filesRead = 0;
 		let png1 = request.get(tile1).pipe(new PNG());
@@ -55,6 +71,12 @@ function compareTiles(tile1, tile2, zoom, x, y, threshold, tilesTotal) {
 	});
 }
 
+/**
+ * Splits collection of tiles into smaller collections
+ * @param  {Number} interval  Number of horizontal and vertical tiles in smaller collection
+ * @param  {Object} xyz       Defines range of tiles to include (xyz format)
+ * @return {Array}            Array of smaller tile collections defined in xyz format
+ */
 function splitArea(interval, xyz) {
 	let xyzSets = [];
 	for (let x = xyz.minX; x <= xyz.maxX; x = x + interval) {
