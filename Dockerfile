@@ -15,7 +15,7 @@ RUN npm install
 COPY . ${WORK}
 
 # Import finland mbtiles
-RUN curl -k https://s3.amazonaws.com/mapbox/osm-qa-tiles/latest.country/finland.mbtiles.gz | gzip -cd > ${WORK}/import/finland.mbtiles
+RUN npm run import
 
 EXPOSE ${PORT}
 
