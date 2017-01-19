@@ -4,6 +4,7 @@
   "description": "HSL Map Validator",
   "main": "start.js",
   "dependencies": {
+    "babel-register": "^6.18.0",
     "geojson-merge": "^0.3.0",
     "glob": "^7.1.1",
     "lodash": "^4.17.2",
@@ -18,7 +19,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "import": "curl -k https://s3.amazonaws.com/mapbox/osm-qa-tiles/latest.country/finland.mbtiles.gz | gzip -cd > import/finland.mbtiles"
+    "import": "curl -k https://s3.amazonaws.com/mapbox/osm-qa-tiles/latest.country/finland.mbtiles.gz | gzip -cd > import/finland.mbtiles",
+    "start-match": "node -r babel-register start-match"
   },
   "repository": {
     "type": "git",

@@ -93,5 +93,5 @@ npm install
 Run matching
 
 ```
-node start-match
+npm run start-match
 ```
