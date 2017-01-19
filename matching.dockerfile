@@ -1,12 +1,12 @@
 FROM node:6
 
 # Arguments can be set on build, otherwise defaults are used
-ARG TILE_URL1=https://api.digitransit.fi/map/v1/hsl-map
-ARG TILE_URL2=https://dev-api.digitransit.fi/map/v1/hsl-map
-ARG AREA_BBOX=[24.2578125,59.86136748351594,25.551452636718746,60.5153990545698]
+ARG TILE_URL1
+ARG TILE_URL2
+ARG AREA_BBOX
 ARG AREA_XYZ
-ARG ZOOM=14
-ARG SIZE=512
+ARG ZOOM
+ARG SIZE
 ARG PIXELS_CRITICAL
 ARG COLOR_THRESHOLD
 
@@ -36,7 +36,7 @@ COPY . ${WORK}
 EXPOSE ${PORT}
 
 # Perform matching
-RUN node start-match
+RUN npm run start-match
 
 # Start server that serves validation results
 ENTRYPOINT cd ${WORK}/export/matching && \
