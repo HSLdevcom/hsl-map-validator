@@ -15,20 +15,22 @@ let tilesTotal = 0;
  * @param  {Object} options Options used for comparison
  * @return {Promise}        Promise containing the function for comparing all tiles within the collection
  */
-function getTiles(xyz, options) {
+function compareTileSet(xyz, options) {
 	return new Promise((resolve) => {
 		let promises = [];
 		for (let x = xyz.minX; x <= xyz.maxX; x++) {
 			for (let y = xyz.minY; y <= xyz.maxY; y++ ) {
-				var promise = compareTiles(
+				var promise = compare(
 					`${options.url1}/${options.area.zoom}/${x}/${y}.png`, 
 					`${options.url2}/${options.area.zoom}/${x}/${y}.png`,
-					options.zoom, x, y, options.threshold, tilesTotal
+					options.zoom, x, y, options.threshold
 				);
 				promises.push(promise);
 			}
 		}
-		Promise.all(promises).then(() => resolve());
+		Promise.all(promises)
+			.then(() => resolve())
+			.catch(error => console.log(error));
 	});
 }
 
@@ -42,7 +44,7 @@ function getTiles(xyz, options) {
  * @param  {Number} threshold  Threshold values used in the comparison
  * @return {Promise}           Promise containing the comparison function
  */
-function compareTiles(tile1, tile2, zoom, x, y, threshold) {
+function compare(tile1, tile2, zoom, x, y, threshold) {
 	return new Promise((resolve) => {
 		let filesRead = 0;
 		let png1 = request.get(tile1).pipe(new PNG());
@@ -96,6 +98,7 @@ function splitArea(interval, xyz) {
 module.exports = function(options) {
     let xyz;
 	if (options.area.xyz) {
+		// Set XYZ tile bounds from receieved XY values
 		xyz = {
 			minX: options.area.xyz[0],
 			minY: options.area.xyz[1],
@@ -106,6 +109,7 @@ module.exports = function(options) {
 		const merc = new SphericalMercator({
 		    size: options.area.size,
 		});
+		// Calculate XYZ tile bounds from bbox
 		xyz = merc.xyz(options.area.bbox, options.area.zoom);
 	}
 	tileCounter = 0;
@@ -113,7 +117,11 @@ module.exports = function(options) {
 	const xyzSets = splitArea(10, xyz);
 	console.log(`${tilesTotal} tiles to compare`)
 	
-	xyzSets.reduce((prev, cur) => {
-		return prev.then(() => getTiles(cur, options))
-	}, new Promise((resolve) => resolve()));
+	const tileSets = xyzSets.reduce((prev, cur, index) => {
+		if (index === 0) return compareTileSet(cur, options)
+		return prev.then(() => compareTileSet(cur, options))
+	}, "");
+	tileSets
+		.then(() => process.exit())
+    	.catch(error => console.log(error));
 };
