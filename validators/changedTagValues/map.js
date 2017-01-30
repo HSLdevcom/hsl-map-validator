@@ -1,5 +1,10 @@
 "use strict";
 
+function isMatchingFeature(feature, other) {
+    return feature.properties["@type"] === other.properties["@type"] &&
+           feature.properties["@id"] === other.properties["@id"];
+}
+
 module.exports = function(tileLayers, tileInfo, writeData, done) {
 
     const featuresTest = tileLayers.test.osm.features;
@@ -7,7 +12,7 @@ module.exports = function(tileLayers, tileInfo, writeData, done) {
 
     for (const test of featuresTest) {
         const tags = mapOptions.tags || Object.keys(test.properties).filter(key => !key.includes("@"));
-        const base = featuresBase.find(feature => feature.properties["@id"] === test.properties["@id"]);
+        const base = featuresBase.find(feature => isMatchingFeature(feature, test));
 
         if (!base) continue;
 
@@ -19,7 +24,7 @@ module.exports = function(tileLayers, tileInfo, writeData, done) {
         }
 
         if (changes.length) {
-            test.properties["@validation"] = changes.join();
+            test.properties["@validation"] = changes.join("; ");
             writeData(JSON.stringify(test) + "\n");
         }
     }
