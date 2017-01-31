@@ -41,6 +41,7 @@ RUN \
 
 # Run validators
 RUN node start && \
+  node geojson-report export/features.geojson export/results.txt && \
   node geojson-merge export/features.geojson export/featureCollection.geojson
 
 EXPOSE ${PORT}
