@@ -28,10 +28,7 @@ Install dependencies
 npm install
 ```
 
-Fetch OSM QA Tiles
-```
-npm run import
-```
+Generate OSM QA tiles (see `Dockerfile`)
 
 ### Run
 

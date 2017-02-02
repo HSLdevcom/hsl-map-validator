@@ -2,16 +2,30 @@
 
 const fs = require("fs");
 const path = require("path");
-const blacklistValidator = require("./validators/blacklist");
+const extend = require("lodash/extend");
+
+const changedTagValuesValidator = require("./validators/changedTagValues");
 
 const options = {
     sources: [{
-        name: "osm",
-        mbtiles: path.join(__dirname, "import", "finland.mbtiles"),
-        raw: false
+        name: "test",
+        mbtiles: path.join(__dirname, "import", "osm.mbtiles"),
+        raw: false,
+    },
+    {
+        name: "base",
+        mbtiles: path.join(__dirname, "import", "osm.base.mbtiles"),
+        raw: false,
     }],
-    output: fs.createWriteStream(path.join(__dirname, "export", "blacklist.geojson")),
-    zoom: 15,
+    zoom: 14,
+    output: fs.createWriteStream(path.join(__dirname, "export", "features.geojson")),
 };
 
-blacklistValidator(options);
+const changedTagValuesOptions = extend(options, {
+    mapOptions: {
+        tags: ["name", "name:sv"],
+    },
+});
+
+changedTagValuesValidator(changedTagValuesOptions);
+
