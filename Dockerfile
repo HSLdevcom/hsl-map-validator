@@ -36,8 +36,8 @@ COPY . ${WORK}
 RUN \
   curl -sSfL https://dev.hsl.fi/osm.hsl/hsl.osm.pbf > import/osm.pbf && \
   curl -sSfL https://dev.hsl.fi/osm.hsl/hsl_20161216T110302Z.osm.pbf > import/osm.base.pbf && \
-  ./mason_packages/.link/bin/minjur import/osm.pbf | tippecanoe -l osm -Z 14 -o import/osm.mbtiles && \
-  ./mason_packages/.link/bin/minjur import/osm.base.pbf | tippecanoe -l osm -Z 14 -o import/osm.base.mbtiles
+  ./mason_packages/.link/bin/minjur -p import/osm.pbf | tippecanoe -l osm -Z 14 -o import/osm.mbtiles && \
+  ./mason_packages/.link/bin/minjur -p import/osm.base.pbf | tippecanoe -l osm -Z 14 -o import/osm.base.mbtiles
 
 # Run validators
 RUN node start && \
