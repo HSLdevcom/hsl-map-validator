@@ -24,7 +24,8 @@ module.exports = function(tileLayers, tileInfo, writeData, done) {
             if (utils.isIntersecting(railway, way)) {
                 const matchingFeature = utils.findMatchingFeature(way, waysBase);
                 if (matchingFeature) {
-                    way.properties["@changedTags"] = JSON.stringify(utils.getChangedTagValues(way, matchingFeature));
+                    const changes = matchingFeature ? utils.getChangedTagValues(way, matchingFeature) : null;
+                    if (changes && changes.length) way.properties["@changedTags"] = changes.join("; ");
                 }
                 way.properties["@validator"] = "trainCrossing";
                 writeData(JSON.stringify(way) + "\n");

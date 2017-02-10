@@ -8,7 +8,7 @@ module.exports = function(tileLayers, tileInfo, writeData, done) {
 
     for (const test of featuresTest) {
         const matchingFeature = utils.findMatchingFeature(test, featuresBase);
-        const changes =  matchingFeature ? utils.getChangedTagValues(test, matchingFeature, mapOptions.tags) : null;
+        const changes = matchingFeature ? utils.getChangedTagValues(test, matchingFeature, mapOptions.tags) : null;
 
         if (changes && changes.length) {
             test.properties["@validation"] = changes.join("; ");
