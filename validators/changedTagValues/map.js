@@ -7,7 +7,8 @@ module.exports = function(tileLayers, tileInfo, writeData, done) {
     const featuresBase = tileLayers.base.osm.features;
 
     for (const test of featuresTest) {
-        const changes = utils.changedTags(test, featuresBase);
+        const matchingFeature = utils.findMatchingFeature(test, featuresBase);
+        const changes =  matchingFeature ? utils.getChangedTagValues(test, matchingFeature, mapOptions.tags) : null;
 
         if (changes && changes.length) {
             test.properties["@validation"] = changes.join("; ");

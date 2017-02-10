@@ -22,9 +22,11 @@ module.exports = function(tileLayers, tileInfo, writeData, done) {
     railwaysTest.forEach((railway) => {
         waysTest.forEach((way) => {
             if (utils.isIntersecting(railway, way)) {
-                const changedTags = JSON.stringify(utils.changedTags(way, waysBase));
+                const matchingFeature = utils.findMatchingFeature(way, waysBase);
+                if (matchingFeature) {
+                    way.properties["@changedTags"] = JSON.stringify(utils.getChangedTagValues(way, matchingFeature));
+                }
                 way.properties["@validator"] = "trainCrossing";
-                way.properties["@changedTags"] = changedTags;
                 writeData(JSON.stringify(way) + "\n");
             }
         });
