@@ -2,9 +2,9 @@
 
 const fs = require("fs");
 const path = require("path");
-const extend = require("lodash/extend");
 
 const changedTagValuesValidator = require("./validators/changedTagValues");
+const trainCrossingValidator = require("./validators/trainCrossing");
 
 const options = {
     sources: [{
@@ -21,11 +21,9 @@ const options = {
     output: fs.createWriteStream(path.join(__dirname, "export", "features.geojson")),
 };
 
-const changedTagValuesOptions = extend(options, {
-    mapOptions: {
-        tags: ["name", "name:sv"],
-    },
+const changedTagValuesOptions = Object.assign({}, options, {
+    mapOptions: { tags: ["name", "name:sv"] },
 });
 
 changedTagValuesValidator(changedTagValuesOptions);
-
+trainCrossingValidator(options);
