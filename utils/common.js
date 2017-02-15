@@ -13,7 +13,7 @@ function getChangedTagValues(feature, otherFeature, featureTags) {
     const changes = [];
     for (const tag of tags) {
         if (feature.properties[tag] !== otherFeature.properties[tag]) {
-            changes.push(`${tag}: ${feature.properties[tag]} > ${otherFeature.properties[tag]}`);
+            changes.push(`${tag}: ${otherFeature.properties[tag]} > ${feature.properties[tag]}`);
         }
     }
     return changes;
